@@ -86,7 +86,7 @@ def readData(folder:str, trainValTestReturn:int = 0):
 
     return clips[trainValTestReturn], events[trainValTestReturn], startTimes[trainValTestReturn], endTimes[trainValTestReturn]
 
-def readDataset(folderpath:str):
+def readDataset(folderpath:str, numOfExamples = 1000):
     print("Warning: Decaprecated", file=sys.stderr)
     with open(folderpath+"/events.pkl") as f:
         rawEvents = f.readlines()
@@ -103,13 +103,14 @@ def readDataset(folderpath:str):
     ambigousExp = re.compile("^S.*")
     lpExp = re.compile("^\(lp.*")
 
-    sizeOfDataset  = 572
+    sizeOfDataset  = 572 if numOfExamples > 572 else numOfExamples
     # Results:
     events = np.empty(sizeOfDataset,dtype=object)
     clips = np.zeros((sizeOfDataset, 20, 360, 490))
     startTimes = np.zeros(sizeOfDataset)
     endTimes = np.zeros(sizeOfDataset)
 
+    counter = 0
 
     for line in rawEvents:
         if clipEventExp.match(line) or ambigousExp.match(line) and not lastWaslp:
@@ -128,6 +129,10 @@ def readDataset(folderpath:str):
             lastWaslp = True
         else:
             lastWaslp = False
+
+        if counter>= numOfExamples:
+            print("You now have the requested number of examples,",numOfExamples,", and wilw therefore exit.")
+            break
 
     return  clips, events,startTimes,endTimes
 
