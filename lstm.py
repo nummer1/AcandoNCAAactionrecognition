@@ -5,6 +5,7 @@ from tensorflow.keras import optimizers
 from functools import reduce
 import dataImport
 import Utility
+import numpy as np
 
 
 rows = 360
@@ -73,7 +74,7 @@ print("made target vectors")
 # for i, e in enumerate(events):
 #     target_event.append(util.get_hot_in_1_from_label(e))
 
-model.fit(train_c, train_target, batch_size=1, epochs=1, steps_per_epoch=10, validation_data=(val_c, val_target))
+model.fit(np.asarray(train_c), train_target, batch_size=1, epochs=1, steps_per_epoch=10, validation_data=(val_c, val_target))
 model.save_weights("weights.hdf5")
 print("trained and saved data")
 score = model.evaluate(test_c, test_target, batch_size=1)
