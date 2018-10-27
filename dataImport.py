@@ -18,7 +18,7 @@ def loadPictures(folder: str, grayscale: bool = True):
     grey = []
     print("Load pictures Folder:", folder)
     for im_path in glob.glob(folder+"/*.png"):
-        print("IM_path:",im_path)
+        #print("IM_path:",im_path)
         im = imageio.imread(im_path)
         pictures.append(im)
 
@@ -44,12 +44,12 @@ def loadPictures(folder: str, grayscale: bool = True):
 # Does not give grayscale anyway
 def efficientLoadPicures(folder: str, grayscale: bool = False):
     pictures = []
-    print(folder)
+    #print(folder)
     for im_path in glob.glob(folder+"/*.png"):
         #print("IM_path:",im_path)
         im = image.load_img(im_path)
         pictures.append(image.img_to_array(im))
-        #print(pictures[len(pictures)-1])
+        print(pictures[len(pictures)-1])
 
     return pictures
 
@@ -99,7 +99,7 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
             startTimes[trainValTestIndex].append(csv_info[1].strip())
             endTimes[trainValTestIndex].append(csv_info[2].strip())
 
-            clips.append(efficientLoadPicures(clipPath+"/"))
+            clips[trainValTestIndex].append(efficientLoadPicures(clipPath+"/"))
 
         print("The amount of parsed youtube videos:",counter)
         if counter >= numOfExamples:
@@ -170,7 +170,7 @@ if __name__ == '__main__':
 
     #efficientLoadPicures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/", True)
 
-    readData("/home/henrik/Cogito/Hackathon/data")
+    print(readData("/home/henrik/Cogito/Hackathon/data"))
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
