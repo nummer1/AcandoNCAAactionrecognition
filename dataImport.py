@@ -76,7 +76,7 @@ def readData(folder:str, trainValTestReturn:int = 0):
             elif trainValTest == 'test':
                 trainValTestIndex = 2
             else:
-                #print("Some error in the trainValTest from the csv:",trainValTest,file=sys.stderr)
+                print("Some error in the trainValTest from the csv:",trainValTest,file=sys.stderr)
 
             events[trainValTestIndex].append(csv_info[0])
             startTimes[trainValTestIndex].append(csv_info[1])
@@ -122,7 +122,7 @@ def readDataset(folderpath:str):
         elif clipNumberExp.match(line):
             currentClip = int(line[1:])
         else:
-            #print("Something is strange width: "+line,file=sys.stderr)
+            print("Something is strange width: "+line,file=sys.stderr)
 
         if lpExp.match(line):
             lastWaslp = True
@@ -153,10 +153,5 @@ if __name__ == '__main__':
 # #X = np.array([np.array(image) for image in X])
 # #X = ImageUtils.numapy_grayscale(X)
 #
-<<<<<<< HEAD
 # #print(pictures[0])
 # print(grey)/
-=======
-# ##print(pictures[0])
-# #print(grey)/
->>>>>>> 95e7e20bf3bc03f1f9eef23186b1dc6c7ff8cb65
