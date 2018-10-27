@@ -12,25 +12,25 @@ def rgb2gray(rgb):
 def loadPictures(folder: str, grayscale: bool = True):
     pictures = []
     grey = []
-    #print("Load pictures Folder:", folder)
+    print("Load pictures Folder:", folder)
     for im_path in glob.glob(folder+"/*.png"):
-        #print("IM_path:",im_path)
+        print("IM_path:",im_path)
         im = imageio.imread(im_path)
-        #print(im.shape)
+        print(im.shape)
         pictures.append(im)
 
     pictureWidth = pictures[0].shape[0]
     pictureHeight = pictures[0].shape[1]
 
-    #print(pictureWidth,", ",pictureHeight)
+    print(pictureWidth,", ",pictureHeight)
 
 
     grey = np.zeros((len(pictures),pictureWidth,pictureHeight))
     for i in range(len(pictures)):
         for x in range(pictureWidth):
             for y in range(pictureHeight):
-                ##print(pictures[x][y])
-                ##print("Color: ",pictures[i][x][y], " , Grey: ", rgb2gray(pictures[i][x][y]))
+                #print(pictures[x][y])
+                #print("Color: ",pictures[i][x][y], " , Grey: ", rgb2gray(pictures[i][x][y]))
                 grey[i][x,y] = rgb2gray(pictures[i][x, y])
 
     if grayscale:
@@ -46,7 +46,7 @@ def readClipInfo(filepath) -> (str,str,str):
     f = open(filepath+"/clip_info.csv", 'r')
     lines = f.readlines()
     f.close()
-    #print(lines)
+    print(lines)
     startTime = lines[8].split(',')[1]
     endTime = lines[9].split(',')[1]
     event = lines[10].split(',')[1]
@@ -61,11 +61,11 @@ def readData(folder:str, trainValTestReturn:int = 0):
     startTimes = [[],[],[]]
     endTimes = [[],[],[]]
 
-    #print("Folder\t", folder)
+    print("Folder\t", folder)
     for youtubeVids in glob.glob(folder+"/*"):
-        #print("Youtube videos:\t",youtubeVids)
+        print("Youtube videos:\t",youtubeVids)
         for clipPath in glob.glob(youtubeVids+"/*"):
-            #print("ClipPath\t", clipPath)
+            print("ClipPath\t", clipPath)
 
             csv_info = readClipInfo(clipPath)
             trainValTest = csv_info[3].strip()
@@ -76,7 +76,7 @@ def readData(folder:str, trainValTestReturn:int = 0):
             elif trainValTest == 'test':
                 trainValTestIndex = 2
             else:
-                #print("Some error in the trainValTest from the csv:",trainValTest,file=sys.stderr)
+                print("Some error in the trainValTest from the csv:",trainValTest,file=sys.stderr)
 
             events[trainValTestIndex].append(csv_info[0])
             startTimes[trainValTestIndex].append(csv_info[1])
@@ -87,7 +87,7 @@ def readData(folder:str, trainValTestReturn:int = 0):
     return clips[trainValTestReturn], events[trainValTestReturn], startTimes[trainValTestReturn], endTimes[trainValTestReturn]
 
 def readDataset(folderpath:str):
-    #print("Warning: Decaprecated", file=sys.stderr)
+    print("Warning: Decaprecated", file=sys.stderr)
     with open(folderpath+"/events.pkl") as f:
         rawEvents = f.readlines()
 
@@ -115,14 +115,14 @@ def readDataset(folderpath:str):
         if clipEventExp.match(line) or ambigousExp.match(line) and not lastWaslp:
             currentEvent = line.split("'")[1]
         elif clipNameExp.match(line) or ambigousExp.match(line) and lastWaslp:
-            ##print("CurrentClip",currentClip)
-            ##print(events)
+            #print("CurrentClip",currentClip)
+            #print(events)
             events[currentClip], startTimes[currentClip], endTimes[currentClip] =  readClipInfo(folderpath+"/"+line.split("'")[1]+'/')
             clips[currentClip] = loadPictures(folderpath+"/"+line.split("'")[1]+"/")
         elif clipNumberExp.match(line):
             currentClip = int(line[1:])
         else:
-            #print("Something is strange width: "+line,file=sys.stderr)
+            print("Something is strange width: "+line,file=sys.stderr)
 
         if lpExp.match(line):
             lastWaslp = True
@@ -133,17 +133,17 @@ def readDataset(folderpath:str):
 
 
 if __name__ == '__main__':
-    ##print(readCSVfolder("/home/henrik/Cogito/Hackathon/data/"))
+    #print(readCSVfolder("/home/henrik/Cogito/Hackathon/data/"))
 
-    ##print(readTrackingBox("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/12_info.csv"))
+    #print(readTrackingBox("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/12_info.csv"))
 
-    ##print(readClipInfo("/home/henrik/Cogito/Hackathon/data/_6MvD7aK_bI/clip_18/clip_info.csv"))
+    #print(readClipInfo("/home/henrik/Cogito/Hackathon/data/_6MvD7aK_bI/clip_18/clip_info.csv"))
 
     #loadPictures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png", True)
 
     readData("/home/henrik/Cogito/Hackathon/data")
 #
-# #print("------")
+# print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
 # # X = np.array([np.array(image) for image in X])
 # # X = ImageUtils.numapy_grayscale(X)
@@ -153,5 +153,5 @@ if __name__ == '__main__':
 # #X = np.array([np.array(image) for image in X])
 # #X = ImageUtils.numapy_grayscale(X)
 #
-# ##print(pictures[0])
-# #print(grey)/
+# #print(pictures[0])
+# print(grey)/
