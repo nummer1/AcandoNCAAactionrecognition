@@ -92,9 +92,9 @@ def readDataset(folderpath:str):
         rawEvents = f.readlines()
 
     #State of parsing
-    lastWaslp :bool = False
-    currentEvent:str = ""
-    currentClip:int = 0
+    lastWaslp = False
+    currentEvent = ""
+    currentClip = 0
 
     #Expressions to check for
     clipNumberExp = re.compile("^p\d*")
