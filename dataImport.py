@@ -50,17 +50,16 @@ def readClipInfo(filepath) -> (str,str,str):
     startTime = lines[8].split(',')[1]
     endTime = lines[9].split(',')[1]
     event = lines[10].split(',')[1]
-    return event, startTime, endTime
+    trainValTest = lines[11].split(',')[1]
+    return event, startTime, endTime, trainValTest
 
-# Decapricated
-def readData(folder:str):
-    print("Warning, not maintained",file=sys.stderr)
-
-    # Results:
-    events = []
-    clips = []
-    startTimes = []
-    endTimes = []
+# TrainValTest is 0 for training se, 1 for validation set and 2 for testset. Use it to choose which dataset you want in return.
+def readData(folder:str, trainValTestReturn:int):
+    # Results: [[train],[val],[test]]
+    events = [[],[],[]]
+    clips = [[],[],[]]
+    startTimes = [[],[],[]]
+    endTimes = [[],[],[]]
 
     print("Folder", folder)
     for youtubeVids in glob.glob(folder+"*"):
@@ -68,13 +67,23 @@ def readData(folder:str):
             print("ClipPath", clipPath)
 
             csv_info = readClipInfo(clipPath + "/clip_info.csv")
-            events.append(csv_info[0])
-            startTimes.append(csv_info[1])
-            endTimes.append(csv_info[2])
+            trainValTest = csv_info[3]
+            if trainValTest == 'train':
+                trainValTestIndex = 0
+            elif trainValTest == 'val':
+                trainValTestIndex = 1
+            elif trainValTest == 'test':
+                trainValTestIndex = 2
+            else:
+                print("Some error in the trainValTest from the csv:",trainValTest,file=sys.stderr)
+
+            events[trainValTestIndex].append(csv_info[0])
+            startTimes[trainValTestIndex].append(csv_info[1])
+            endTimes[trainValTestIndex].append(csv_info[2])
 
             clips.append(loadPictures(clipPath+"/"))
 
-    return clips, events, startTimes, endTimes
+    return clips[trainValTestReturn], events[trainValTestReturn], startTimes[trainValTestReturn], endTimes[trainValTestReturn]
 
 def readDataset(folderpath:str):
     print("Warning: Decaprecated", file=sys.stderr)
