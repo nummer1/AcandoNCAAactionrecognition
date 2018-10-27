@@ -66,6 +66,9 @@ def readCSVfolder(folder:str):
 def readDataset(folderpath:str):
     with open(folderpath+"/events.pkl") as f:
         rawEvents = f.readlines()
+
+    #State of parsing
+    lastWaslp :bool = False
     currentEvent:str = ""
     currentClip:int = 0
 
@@ -73,6 +76,8 @@ def readDataset(folderpath:str):
     clipNumberExp = re.compile("^p\d*")
     clipNameExp = re.compile("^aS.*")
     clipEventExp = re.compile("^asS.*")
+    ambigousExp = re.compile("^S.*")
+    lpExp = re.compile("^\(lp.*")
 
     sizeOfDataset  = 572
     # Results:
@@ -81,9 +86,9 @@ def readDataset(folderpath:str):
 
 
     for line in rawEvents:
-        if clipEventExp.match(line):
+        if clipEventExp.match(line) or ambigousExp.match(line) and not lastWaslp:
             currentEvent = line.split("'")[1]
-        elif clipNameExp.match(line):
+        elif clipNameExp.match(line) or ambigousExp.match(line) and lastWaslp:
             #print("CurrentClip",currentClip)
             #print(events)
             events[currentClip] =  readClipInfo(folderpath+"/"+line.split("'")[1]+'/')
@@ -92,6 +97,11 @@ def readDataset(folderpath:str):
             currentClip = int(line[1:])
         else:
             print("Something is strange width: "+line,file=sys.stderr)
+
+        if lpExp.match(line):
+            lastWaslp = True
+        else:
+            lastWaslp = False
 
     return events, clips
 
