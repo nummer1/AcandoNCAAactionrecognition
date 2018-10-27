@@ -54,11 +54,11 @@ model.summary()
 
 
 util = Utility.Utility()
-train_c, train_e, _, _ = dataImport.readData("data", 0, numOfExamples=1)
+train_c, train_e, _, _ = dataImport.readData("data", 0)
 print("read training set")
-val_c, val_e, _, _ = dataImport.readData("data", 1, numOfExamples=1)
+val_c, val_e, _, _ = dataImport.readData("data", 1)
 print("read validation set")
-test_c, test_e, _, _ = dataImport.readData("data", 2, numOfExamples=1)
+test_c, test_e, _, _ = dataImport.readData("data", 2)
 print("read test set")
 
 # target_event = []
@@ -70,7 +70,7 @@ print("made target vectors")
 # for i, e in enumerate(events):
 #     target_event.append(util.get_hot_in_1_from_label(e))
 
-model.fit(train_c, train_target, batch_size=64, epochs=1, validation_data=(val_c, val_target))
+model.fit(train_c, train_target, batch_size=1, epochs=1, validation_data=(val_c, val_target))
 model.save_weights("weights.hdf5")
 print("trained and saved data")
 score = model.evaluate(test_c, test_target, batch_size=1)

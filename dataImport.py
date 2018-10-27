@@ -7,7 +7,7 @@ import glob
 import numpy as np
 
 #import Tensorflow
-from keras.preprocessing import image
+from tensorflow.keras.preprocessing import image
 
 def rgb2gray(rgb):
     return np.dot(rgb[..., :3], [0.299, 0.587, 0.114])
