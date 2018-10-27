@@ -57,11 +57,13 @@ model.summary()
 
 
 util = Utility.Utility()
+
 train_c, train_e, _, _ = dataImport.readData("data", 0,numOfExamples=2)
+
 print("read training set")
-val_c, val_e, _, _ = dataImport.readData("data", 1)
+val_c, val_e, _, _ = dataImport.readData("data", 1, numOfExamples=10)
 print("read validation set")
-test_c, test_e, _, _ = dataImport.readData("data", 2)
+test_c, test_e, _, _ = dataImport.readData("data", 2, numOfExamples=10)
 print("read test set")
 
 # target_event = []
