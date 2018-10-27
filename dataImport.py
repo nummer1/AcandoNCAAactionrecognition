@@ -49,7 +49,7 @@ def efficientLoadPicures(folder: str, grayscale: bool = False):
         #print("IM_path:",im_path)
         im = image.load_img(im_path)
         pictures.append(image.img_to_array(im))
-        print(pictures[len(pictures)-1])
+        #print(pictures[len(pictures)-1])
 
     return pictures
 
@@ -170,7 +170,7 @@ if __name__ == '__main__':
 
     #efficientLoadPicures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/", True)
 
-    print(readData("/home/henrik/Cogito/Hackathon/data"))
+    print(readData("./data"))
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
