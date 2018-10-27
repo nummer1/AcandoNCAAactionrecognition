@@ -153,5 +153,3 @@ if __name__ == '__main__':
 # #X = np.array([np.array(image) for image in X])
 # #X = ImageUtils.numapy_grayscale(X)
 #
-# #print(pictures[0])
-# print(grey)/
