@@ -44,8 +44,8 @@ model.add(r_layer)
 # model.add(LSTM(32, return_sequences=True, input_shape=(timesteps, data_dim)))
 shape = reduce(lambda x, y: x*y, r_layer.output_shape[-3:])
 model.add(Reshape((20, shape)))
-model.add(LSTM(1000, return_sequences=True))
 model.add(LSTM(200, return_sequences=True))
+model.add(LSTM(50, return_sequences=True))
 model.add(Dense(num_classes, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
@@ -54,11 +54,11 @@ model.summary()
 
 
 util = Utility.Utility()
-train_c, train_e, _, _ = dataImport.readData("data", 0)
+train_c, train_e, _, _ = dataImport.readData("data", 0, numOfExamples=1)
 print("read training set")
-val_c, val_e, _, _ = dataImport.readData("data", 1)
+val_c, val_e, _, _ = dataImport.readData("data", 1, numOfExamples=1)
 print("read validation set")
-test_c, test_e, _, _ = dataImport.readData("data", 2)
+test_c, test_e, _, _ = dataImport.readData("data", 2, numOfExamples=1)
 print("read test set")
 
 # target_event = []
