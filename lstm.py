@@ -58,7 +58,6 @@ model.summary()
 
 util = Utility.Utility()
 train_c, train_e, _, _ = dataImport.readData("data", 0, numOfExamples=10)
-
 print("read training set")
 val_c, val_e, _, _ = dataImport.readData("data", 1, numOfExamples=1)
 print("read validation set")
