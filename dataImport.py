@@ -54,12 +54,14 @@ def readClipInfo(filepath) -> (str,str,str):
     return event, startTime, endTime, trainValTest
 
 # TrainValTest is 0 for training se, 1 for validation set and 2 for testset. Use it to choose which dataset you want in return.
-def readData(folder:str, trainValTestReturn:int = 0):
+def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
     # Results: [[train],[val],[test]]
     events = [[],[],[]]
     clips = [[],[],[]]
     startTimes = [[],[],[]]
     endTimes = [[],[],[]]
+
+    counter = 0
 
     print("Folder\t", folder)
     for youtubeVids in glob.glob(folder+"/*"):
@@ -83,6 +85,10 @@ def readData(folder:str, trainValTestReturn:int = 0):
             endTimes[trainValTestIndex].append(csv_info[2])
 
             clips.append(loadPictures(clipPath+"/"))
+
+        if counter >= numOfExamples:
+            print("You now have the requested number of examples,", numOfExamples, ", and wilw therefore exit.")
+            break
 
     return clips[trainValTestReturn], events[trainValTestReturn], startTimes[trainValTestReturn], endTimes[trainValTestReturn]
 
