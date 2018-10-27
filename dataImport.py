@@ -80,9 +80,9 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
 
     print("Folder\t", folder)
     for youtubeVids in glob.glob(folder+"/*"):
-        print("Youtube videos:\t",youtubeVids)
+        #print("Youtube videos:\t",youtubeVids)
         for clipPath in glob.glob(youtubeVids+"/*"):
-            print("ClipPath\t", clipPath)
+            #print("ClipPath\t", clipPath)
 
             csv_info = readClipInfo(clipPath)
             trainValTest = csv_info[3].strip()
@@ -101,10 +101,12 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
 
             clips.append(efficientLoadPicures(clipPath+"/"))
 
+        print("The amount of parsed youtube videos:",counter)
         if counter >= numOfExamples:
             print("You now have the requested number of examples,", numOfExamples, ", and wilw therefore exit.")
             break
         counter+=1
+
 
     return clips[trainValTestReturn], events[trainValTestReturn], startTimes[trainValTestReturn], endTimes[trainValTestReturn]
 
@@ -168,7 +170,7 @@ if __name__ == '__main__':
 
     #efficientLoadPicures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/", True)
 
-    readData(".")
+    readData("/home/henrik/Cogito/Hackathon/data")
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
