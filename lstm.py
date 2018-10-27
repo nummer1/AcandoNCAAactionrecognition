@@ -1,6 +1,7 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, TimeDistributed, Conv2D, Reshape
 from tensorflow.keras.layers import Bidirectional
+from keras import optimizers
 from functools import reduce
 import dataImport
 import Utility
@@ -48,7 +49,9 @@ model.add(LSTM(200, return_sequences=True))
 model.add(LSTM(50, return_sequences=True))
 model.add(Dense(num_classes, activation='sigmoid'))
 
-model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+
+rms = optimizers.rmsprop(lr=0.0001, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='binary_crossentropy', optimizer=rms, metrics=['accuracy'],)
 # model.load_weights("weights.hdf5", by_name=False)
 model.summary()
 
