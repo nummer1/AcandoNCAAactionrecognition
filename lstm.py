@@ -54,15 +54,20 @@ model.summary()
 
 
 util = Utility.Utility()
-clips, events, start_time, end_time = dataImport.readData("data")
+train_c, train_e, _, _ = dataImport.readData("data", 0)
+val_c, val_e, _, _ = dataImport.readData("data", 1)
+test_c, test_e, _, _ = dataImport.readData("data", 2)
+
 # target_event = []
-target_event = list(map(util.get_hot_in_1_from_label(events)))
+train_target = list(map(util.get_hot_in_1_from_label(train_e)))
+val_target = list(map(util.get_hot_in_1_from_label(val_e)))
+test_target = list(map(util.get_hot_in_1_from_label(test_e)))
 # start_event = list(map(util.get_discret_event_timesstart_time()))
 # for i, e in enumerate(events):
 #     target_event.append(util.get_hot_in_1_from_label(e))
 
-model.fit(x_train, y_train, batch_size=64, epochs=1, validation_data=(x_val, y_val))
+model.fit(train_c, train_target, batch_size=64, epochs=1, validation_data=(val_c, val_target))
 model.save_weights("weights.hdf5")
-score = model.evaluate(x_test, y_test, batch_size=1)
+score = model.evaluate(test_c, test_target, batch_size=1)
 
 print(score)
