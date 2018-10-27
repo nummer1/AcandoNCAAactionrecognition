@@ -6,17 +6,20 @@ import imageio
 import glob
 import numpy as np
 
+#import Tensorflow
+from keras.preprocessing import image
+
 def rgb2gray(rgb):
     return np.dot(rgb[..., :3], [0.299, 0.587, 0.114])
 
 def loadPictures(folder: str, grayscale: bool = True):
+    print("Warning: Decaprecated",file=sys.stderr)
     pictures = []
     grey = []
     print("Load pictures Folder:", folder)
     for im_path in glob.glob(folder+"/*.png"):
         print("IM_path:",im_path)
         im = imageio.imread(im_path)
-        print(im.shape)
         pictures.append(im)
 
     pictureWidth = pictures[0].shape[0]
@@ -37,6 +40,18 @@ def loadPictures(folder: str, grayscale: bool = True):
         return grey
     else:
         return np.array(pictures)
+
+# Does not give grayscale anyway
+def efficientLoadPicures(folder: str, grayscale: bool = False):
+    pictures = []
+    print(folder)
+    for im_path in glob.glob(folder+"/*.png"):
+        #print("IM_path:",im_path)
+        im = image.load_img(im_path)
+        pictures.append(image.img_to_array(im))
+        print(pictures[len(pictures)-1])
+
+    return pictures
 
 def readTrackingBox(filepath):
     pass
@@ -84,7 +99,7 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
             startTimes[trainValTestIndex].append(csv_info[1])
             endTimes[trainValTestIndex].append(csv_info[2])
 
-            clips.append(loadPictures(clipPath+"/"))
+            clips.append(efficientLoadPicures(clipPath+"/"))
 
         if counter >= numOfExamples:
             print("You now have the requested number of examples,", numOfExamples, ", and wilw therefore exit.")
@@ -125,7 +140,7 @@ def readDataset(folderpath:str, numOfExamples = 1000):
             #print("CurrentClip",currentClip)
             #print(events)
             events[currentClip], startTimes[currentClip], endTimes[currentClip] =  readClipInfo(folderpath+"/"+line.split("'")[1]+'/')
-            clips[currentClip] = loadPictures(folderpath+"/"+line.split("'")[1]+"/")
+            clips[currentClip] = efficientLoadPicures(folderpath+"/"+line.split("'")[1]+"/")
         elif clipNumberExp.match(line):
             currentClip = int(line[1:])
         else:
@@ -150,9 +165,9 @@ if __name__ == '__main__':
 
     #print(readClipInfo("/home/henrik/Cogito/Hackathon/data/_6MvD7aK_bI/clip_18/clip_info.csv"))
 
-    #loadPictures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png", True)
+    efficientLoadPicures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/", True)
 
-    readData("/home/henrik/Cogito/Hackathon/data")
+    #readData("/home/henrik/Cogito/Hackathon/data")
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
