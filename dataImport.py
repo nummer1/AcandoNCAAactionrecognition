@@ -93,6 +93,7 @@ def readDataset(folderpath:str):
         else:
             print("Something is strange width: "+line,file=sys.stderr)
 
+    return events, clips
 
 
 if __name__ == '__main__':
