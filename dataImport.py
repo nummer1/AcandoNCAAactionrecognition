@@ -54,7 +54,7 @@ def readClipInfo(filepath) -> (str,str,str):
     return event, startTime, endTime, trainValTest
 
 # TrainValTest is 0 for training se, 1 for validation set and 2 for testset. Use it to choose which dataset you want in return.
-def readData(folder:str, trainValTestReturn:int):
+def readData(folder:str, trainValTestReturn:int = 0):
     # Results: [[train],[val],[test]]
     events = [[],[],[]]
     clips = [[],[],[]]
@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
     #loadPictures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png", True)
 
-    readDataset("/home/henrik/Cogito/Hackathon/test")
+    readData("/home/henrik/Cogito/Hackathon/test")
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
