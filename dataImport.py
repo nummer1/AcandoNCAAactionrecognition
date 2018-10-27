@@ -4,8 +4,8 @@ import sys
 
 import imageio
 import glob
-from PIL import Image
-import ImageUtils
+# from PIL import Image
+# import ImageUtils
 import numpy as np
 
 def rgb2gray(rgb):
