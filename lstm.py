@@ -9,7 +9,7 @@ import Utility
 
 rows = 360
 cols = 490
-colour_channels = 1
+colour_channels = 3
 data_dim = rows * cols
 timesteps = 20
 num_classes = 11 + (timesteps * 2)
@@ -73,7 +73,7 @@ print("made target vectors")
 # for i, e in enumerate(events):
 #     target_event.append(util.get_hot_in_1_from_label(e))
 
-model.fit(train_c, train_target, batch_size=1, epochs=1, validation_data=(val_c, val_target))
+model.fit(train_c, train_target, batch_size=1, epochs=1, steps_per_epoch=10, validation_data=(val_c, val_target))
 model.save_weights("weights.hdf5")
 print("trained and saved data")
 score = model.evaluate(test_c, test_target, batch_size=1)
