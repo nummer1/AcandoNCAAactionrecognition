@@ -92,9 +92,9 @@ def readDataset(folderpath:str):
         rawEvents = f.readlines()
 
     #State of parsing
-    lastWaslp :bool = False
-    currentEvent:str = ""
-    currentClip:int = 0
+    lastWaslp = False
+    currentEvent = ""
+    currentClip = 0
 
     #Expressions to check for
     clipNumberExp = re.compile("^p\d*")
@@ -152,4 +152,3 @@ if __name__ == '__main__':
 # #X, labels = ImageUtils.read_images("data")
 # #X = np.array([np.array(image) for image in X])
 # #X = ImageUtils.numapy_grayscale(X)
-#
