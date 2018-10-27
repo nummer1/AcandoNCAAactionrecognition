@@ -3,17 +3,17 @@ import numpy as np
 class Utility():
     def __init__(self):
         # init dictionary for labels
-        self.dictlabels = {"3-point success":  self.int_to_one_hot(0,11),
-                        "3-point failure" : self.int_to_one_hot(1,11),
+        self.dictlabels = {"3-pointer success":  self.int_to_one_hot(0,11),
+                        "3-pointer failure" : self.int_to_one_hot(1,11),
                         "free-throw success": self.int_to_one_hot(2,11),
                         "free-throw failure": self.int_to_one_hot(3,11),
                         "layup success": self.int_to_one_hot(4,11),
                         "layup failure": self.int_to_one_hot(5,11),
-                        "2-point success" : self.int_to_one_hot(6,11),
-                        "2-point failure" : self.int_to_one_hot(7,11),
+                        "other 2-pointer success" : self.int_to_one_hot(6,11),
+                        "other 2-pointer failure" : self.int_to_one_hot(7,11),
                         "slam dunk success": self.int_to_one_hot(8,11),
                         "slam dunk failure" : self.int_to_one_hot(9,11),
-                        "steal" : self.int_to_one_hot(10,11)}
+                        "steal success" : self.int_to_one_hot(10,11)}
 
     def get_hot_in_1_from_label(self,label):
         '''

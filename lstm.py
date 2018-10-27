@@ -50,24 +50,24 @@ model.add(LSTM(50, return_sequences=True))
 model.add(Dense(num_classes, activation='sigmoid'))
 
 
-rms = optimizers.rmsprop(lr=0.0001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(loss='binary_crossentropy', optimizer=rms, metrics=['accuracy'],)
+# rms = optimizers.rmsprop(lr=0.0001, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'],)
 # model.load_weights("weights.hdf5", by_name=False)
 model.summary()
 
 
 util = Utility.Utility()
-train_c, train_e, _, _ = dataImport.readData("data", 0, numOfExamples=100)
+train_c, train_e, _, _ = dataImport.readData("data", 0, numOfExamples=10)
 print("read training set")
-val_c, val_e, _, _ = dataImport.readData("data", 1, numOfExamples=10)
+val_c, val_e, _, _ = dataImport.readData("data", 1, numOfExamples=1)
 print("read validation set")
-test_c, test_e, _, _ = dataImport.readData("data", 2, numOfExamples=10)
+test_c, test_e, _, _ = dataImport.readData("data", 2, numOfExamples=1)
 print("read test set")
 
 # target_event = []
-train_target = list(map(util.get_hot_in_1_from_label(train_e)))
-val_target = list(map(util.get_hot_in_1_from_label(val_e)))
-test_target = list(map(util.get_hot_in_1_from_label(test_e)))
+train_target = list(map(util.get_hot_in_1_from_label, train_e))
+val_target = list(map(util.get_hot_in_1_from_label, val_e))
+test_target = list(map(util.get_hot_in_1_from_label, test_e))
 print("made target vectors")
 # start_event = list(map(util.get_discret_event_timesstart_time()))
 # for i, e in enumerate(events):

@@ -95,9 +95,9 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
             else:
                 print("Some error in the trainValTest from the csv:",trainValTest,file=sys.stderr)
 
-            events[trainValTestIndex].append(csv_info[0])
-            startTimes[trainValTestIndex].append(csv_info[1])
-            endTimes[trainValTestIndex].append(csv_info[2])
+            events[trainValTestIndex].append(csv_info[0].strip())
+            startTimes[trainValTestIndex].append(csv_info[1].strip())
+            endTimes[trainValTestIndex].append(csv_info[2].strip())
 
             clips.append(efficientLoadPicures(clipPath+"/"))
 
