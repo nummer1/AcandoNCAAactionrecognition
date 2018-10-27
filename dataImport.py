@@ -61,7 +61,7 @@ def readClipInfo(filepath) -> (str,str,str):
     f = open(filepath+"/clip_info.csv", 'r')
     lines = f.readlines()
     f.close()
-    print(lines)
+    #print(lines)
     startTime = lines[8].split(',')[1]
     endTime = lines[9].split(',')[1]
     event = lines[10].split(',')[1]
@@ -166,9 +166,9 @@ if __name__ == '__main__':
 
     #print(readClipInfo("/home/henrik/Cogito/Hackathon/data/_6MvD7aK_bI/clip_18/clip_info.csv"))
 
-    efficientLoadPicures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/", True)
+    #efficientLoadPicures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/", True)
 
-    #readData("/home/henrik/Cogito/Hackathon/data")
+    readData(".")
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
