@@ -1,7 +1,7 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, TimeDistributed, Conv2D, Reshape
 from tensorflow.keras.layers import Bidirectional
-from keras import optimizers
+from tensorflow.keras import optimizers
 from functools import reduce
 import dataImport
 import Utility
@@ -50,14 +50,14 @@ model.add(LSTM(50, return_sequences=True))
 model.add(Dense(num_classes, activation='sigmoid'))
 
 
-rms = optimizers.rmsprop(lr=0.0001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(loss='binary_crossentropy', optimizer=rms, metrics=['accuracy'],)
+rms = optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=1e-6)
+model.compile(loss='binary_crossentropy', optimizer=rms, metrics=['accuracy'])
 # model.load_weights("weights.hdf5", by_name=False)
 model.summary()
 
 
 util = Utility.Utility()
-train_c, train_e, _, _ = dataImport.readData("data", 0)
+train_c, train_e, _, _ = dataImport.readData("data", 0,numOfExamples=2)
 print("read training set")
 val_c, val_e, _, _ = dataImport.readData("data", 1)
 print("read validation set")
