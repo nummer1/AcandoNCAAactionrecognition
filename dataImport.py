@@ -44,7 +44,7 @@ def loadPictures(folder: str, grayscale: bool = True):
 # Does not give grayscale anyway
 def efficientLoadPicures(folder: str, grayscale: bool = False):
     pictures = []
-    print(folder)
+    #print(folder)
     for im_path in glob.glob(folder+"/*.png"):
         #print("IM_path:",im_path)
         im = image.load_img(im_path)
@@ -170,7 +170,7 @@ if __name__ == '__main__':
 
     #efficientLoadPicures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/", True)
 
-    readData("/home/henrik/Cogito/Hackathon/data")
+    print(readData("./data"))
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
