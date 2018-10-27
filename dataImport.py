@@ -42,7 +42,7 @@ def readTrackingBox(filepath):
     pass
 
 
-def readClipInfo(filepath) -> str:
+def readClipInfo(filepath) -> (str,str,str):
     f = open(filepath+"/clip_info.csv", 'r')
     lines = f.readlines()
     f.close()
@@ -50,22 +50,39 @@ def readClipInfo(filepath) -> str:
     startTime = lines[8].split(',')[1]
     endTime = lines[9].split(',')[1]
     event = lines[10].split(',')[1]
-    return event
+    return event, startTime, endTime
 
 # Decapricated
-def readCSVfolder(folder:str):
+def readData(folder:str):
     print("Warning, not maintained",file=sys.stderr)
+
+    # Results:
     events = []
+    clips = []
+    startTimes = []
+    endTimes = []
+
     print("Folder", folder)
-    for superDirs in glob.glob(folder+"*"):
-        for clipPath in glob.glob(superDirs+"*"):
+    for youtubeVids in glob.glob(folder+"*"):
+        for clipPath in glob.glob(youtubeVids+"*"):
             print("ClipPath", clipPath)
-            events.append(readClipInfo(clipPath+"/clip_info.csv"))
-    return events
+
+            csv_info = readClipInfo(clipPath + "/clip_info.csv")
+            events.append(csv_info[0])
+            startTimes.append(csv_info[1])
+            endTimes.append(csv_info[2])
+
+            clips.append(loadPictures(clipPath+"/"))
+
+    return clips, events, startTimes, endTimes
 
 def readDataset(folderpath:str):
+    print("Warning: Decaprecated", file=sys.stderr)
     with open(folderpath+"/events.pkl") as f:
         rawEvents = f.readlines()
+
+    #State of parsing
+    lastWaslp :bool = False
     currentEvent:str = ""
     currentClip:int = 0
 
@@ -73,27 +90,36 @@ def readDataset(folderpath:str):
     clipNumberExp = re.compile("^p\d*")
     clipNameExp = re.compile("^aS.*")
     clipEventExp = re.compile("^asS.*")
+    ambigousExp = re.compile("^S.*")
+    lpExp = re.compile("^\(lp.*")
 
     sizeOfDataset  = 572
     # Results:
     events = np.empty(sizeOfDataset,dtype=object)
     clips = np.zeros((sizeOfDataset, 20, 360, 490))
+    startTimes = np.zeros(sizeOfDataset)
+    endTimes = np.zeros(sizeOfDataset)
 
 
     for line in rawEvents:
-        if clipEventExp.match(line):
+        if clipEventExp.match(line) or ambigousExp.match(line) and not lastWaslp:
             currentEvent = line.split("'")[1]
-        elif clipNameExp.match(line):
+        elif clipNameExp.match(line) or ambigousExp.match(line) and lastWaslp:
             #print("CurrentClip",currentClip)
             #print(events)
-            events[currentClip] =  readClipInfo(folderpath+"/"+line.split("'")[1]+'/')
+            events[currentClip], startTimes[currentClip], endTimes[currentClip] =  readClipInfo(folderpath+"/"+line.split("'")[1]+'/')
             clips[currentClip] = loadPictures(folderpath+"/"+line.split("'")[1]+"/")
         elif clipNumberExp.match(line):
             currentClip = int(line[1:])
         else:
             print("Something is strange width: "+line,file=sys.stderr)
 
-    return events, clips
+        if lpExp.match(line):
+            lastWaslp = True
+        else:
+            lastWaslp = False
+
+    return  clips, events,startTimes,endTimes
 
 
 if __name__ == '__main__':
@@ -105,7 +131,7 @@ if __name__ == '__main__':
 
     #loadPictures("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png", True)
 
-    readDataset("/home/henrik/Cogito/Hackathon/data")
+    readDataset("/home/henrik/Cogito/Hackathon/test")
 #
 # print("------")
 # # X, labels = ImageUtils.read_images("/home/henrik/Cogito/Hackathon/data/etgt5N2CSD8/clip_27/*.png")
