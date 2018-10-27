@@ -49,7 +49,7 @@ def efficientLoadPicures(folder: str, grayscale: bool = False):
         #print("IM_path:",im_path)
         im = image.load_img(im_path)
         pictures.append(image.img_to_array(im))
-        print(pictures[len(pictures)-1])
+        #print(pictures[len(pictures)-1])
 
     return pictures
 
@@ -104,6 +104,7 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
         if counter >= numOfExamples:
             print("You now have the requested number of examples,", numOfExamples, ", and wilw therefore exit.")
             break
+        counter+=1
 
     return clips[trainValTestReturn], events[trainValTestReturn], startTimes[trainValTestReturn], endTimes[trainValTestReturn]
 
