@@ -50,25 +50,15 @@ model.add(LSTM(50, return_sequences=True))
 model.add(Dense(num_classes, activation='sigmoid'))
 
 
-<<<<<<< HEAD
-# rms = optimizers.rmsprop(lr=0.0001, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'],)
-=======
 rms = optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=1e-6)
-model.compile(loss='binary_crossentropy', optimizer=rms, metrics=['accuracy'])
->>>>>>> 7866db5d406792ff5c11a8e256b45a3d2b3e4d45
+model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 # model.load_weights("weights.hdf5", by_name=False)
 model.summary()
 
 
 util = Utility.Utility()
-<<<<<<< HEAD
 train_c, train_e, _, _ = dataImport.readData("data", 0, numOfExamples=10)
-=======
 
-train_c, train_e, _, _ = dataImport.readData("data", 0,numOfExamples=2)
-
->>>>>>> 7866db5d406792ff5c11a8e256b45a3d2b3e4d45
 print("read training set")
 val_c, val_e, _, _ = dataImport.readData("data", 1, numOfExamples=1)
 print("read validation set")
