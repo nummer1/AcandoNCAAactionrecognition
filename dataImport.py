@@ -49,7 +49,7 @@ def efficientLoadPicures(folder: str, grayscale: bool = False):
         #print("IM_path:",im_path)
         im = image.load_img(im_path)
         pictures.append(image.img_to_array(im))
-        print(pictures[len(pictures)-1])
+        #print(pictures[len(pictures)-1])
 
     return pictures
 
@@ -62,9 +62,9 @@ def readClipInfo(filepath) -> (str,str,str):
     lines = f.readlines()
     f.close()
     #print(lines)
-    startTime = lines[8].split(',')[1]
-    endTime = lines[9].split(',')[1]
-    event = lines[10].split(',')[1]
+    startTime = float(lines[8].split(',')[1].strip())
+    endTime = float(lines[9].split(',')[1].strip())
+    event = lines[10].split(',')[1].strip()
     trainValTest = lines[11].split(',')[1]
     return event, startTime, endTime, trainValTest
 
@@ -95,9 +95,9 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
             else:
                 print("Some error in the trainValTest from the csv:",trainValTest,file=sys.stderr)
 
-            events[trainValTestIndex].append(csv_info[0].strip())
-            startTimes[trainValTestIndex].append(csv_info[1].strip())
-            endTimes[trainValTestIndex].append(csv_info[2].strip())
+            events[trainValTestIndex].append(csv_info[0])
+            startTimes[trainValTestIndex].append(csv_info[1])
+            endTimes[trainValTestIndex].append(csv_info[2])
 
             clips[trainValTestIndex].append(efficientLoadPicures(clipPath+"/"))
 
