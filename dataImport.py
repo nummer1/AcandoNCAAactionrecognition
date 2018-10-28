@@ -51,7 +51,7 @@ def efficientLoadPicures(folder: str, grayscale: bool = False):
         pictures.append(image.img_to_array(im))
         #print(pictures[len(pictures)-1])
 
-    return pictures
+    return np.array(pictures)
 
 def readTrackingBox(filepath):
     pass
@@ -108,7 +108,7 @@ def readData(folder:str, trainValTestReturn:int = 0, numOfExamples = 100000):
         counter+=1
 
 
-    return clips[trainValTestReturn], events[trainValTestReturn], startTimes[trainValTestReturn], endTimes[trainValTestReturn]
+    return np.array(clips[trainValTestReturn]), np.array(events[trainValTestReturn]), np.array(startTimes[trainValTestReturn]), np.array(endTimes[trainValTestReturn])
 
 def readDataset(folderpath:str, numOfExamples = 1000):
     print("Warning: Decaprecated", file=sys.stderr)
@@ -158,7 +158,7 @@ def readDataset(folderpath:str, numOfExamples = 1000):
             print("You now have the requested number of examples,",numOfExamples,", and wilw therefore exit.")
             break
 
-    return  clips, events,startTimes,endTimes
+    return  np.array(clips), np.array(events),startTimes,endTimes
 
 
 if __name__ == '__main__':
