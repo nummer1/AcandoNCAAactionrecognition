@@ -74,6 +74,14 @@ print("made target vectors")
 # for i, e in enumerate(events):
 #     target_event.append(util.get_hot_in_1_from_label(e))
 
+temp = np.zeros(
+        shape=(len(train_c), train_c[0].shape[0], train_c[0].shape[1], train_c[0].shape[2], train_c[0].shape[3]))
+
+for i in range(len(train_c)):
+        temp[i] = train_c[i]
+
+train_c = temp
+
 model.fit(np.asarray(train_c), train_target, batch_size=1, epochs=1, steps_per_epoch=10, validation_data=(val_c, val_target))
 model.save_weights("weights.hdf5")
 print("trained and saved data")
